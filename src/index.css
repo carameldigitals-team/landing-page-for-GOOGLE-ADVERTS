@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lato:wght@300;400;700;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-playfair: "Playfair Display", serif;
+  --font-lato: "Lato", sans-serif;
+  
+  --color-gold: #C9A84C;
+  --color-gold-light: #F0D080;
+  --color-dark: #0D0D0D;
+  --color-dark2: #181818;
+  --color-dark3: #222;
+  --color-cream: #FAF6EE;
+  --color-muted: #9A9080;
+  --color-accent: #E85D2F;
+  --color-accent2: #F7A033;
+}
+
+@layer base {
+  body {
+    @apply bg-dark text-[#E8E0D0] font-lato text-[17px] leading-relaxed overflow-x-hidden;
+  }
+}
+
+@layer components {
+  .container {
+    @apply max-w-[780px] mx-auto px-5;
+  }
+  
+  .section-label {
+    @apply text-[11px] font-black tracking-[0.2em] uppercase text-gold mb-3;
+  }
+  
+  .h2-serif {
+    @apply font-playfair text-[clamp(26px,4vw,42px)] font-black text-white leading-tight mb-6;
+  }
+  
+  .h3-serif {
+    @apply font-playfair text-[clamp(20px,3vw,30px)] text-white mb-4;
+  }
+  
+  .big-text {
+    @apply text-[clamp(18px,2.5vw,22px)] leading-relaxed;
+  }
+}
