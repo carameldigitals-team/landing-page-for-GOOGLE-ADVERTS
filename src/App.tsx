@@ -861,10 +861,24 @@ export default function App() {
               <Award className="text-gold" size={40} />
             </div>
             <h3 className="text-2xl font-bold text-white mb-4">The "Elizabeth Emmanuel" Promise</h3>
-            <p className="text-muted leading-relaxed">
-              I am so confident in the **AI Business Mastery** system because I have seen it work for hundreds of professionals. If you follow the 72-hour sprint, use the templates, and don't feel you've gained absolute clarity and a path to income—I don't want your money. We are here to build success stories, not just collect enrollments.
-            </p>
-            <div className="mt-6 font-playfair italic text-gold">"Your success is my only metric."</div>
+            <div className="text-muted leading-relaxed space-y-4">
+              <p>
+                I am so confident in the **AI Business Mastery** system because I have seen it work for hundreds of professionals. If you follow the 72-hour sprint, use the templates, and don't feel you've gained absolute clarity and a path to income—I don't want your money. We are here to build success stories, not just collect enrollments.
+              </p>
+              <p className="text-white font-medium bg-gold/5 p-4 rounded-xl border border-gold/20">
+                I have also used it to build my flagship program <span className="text-gold font-bold">"THE SOVEREIGN INCOME MULTIPLIER SYSTEM"</span> — A system that moves you from salary-only survival (single paycheck, financial anxiety) to 3 automated income streams generating ₦100K-₦500K/month in 90 days, giving you a 12-week skill-finding system, copy-paste product templates, automated sales setup, and weekly live coaching. 
+                <br />
+                <a 
+                  href="https://sovereignincome-multiplier-system.netlify.app" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-block mt-3 text-gold underline decoration-gold/40 hover:decoration-gold transition-all font-bold"
+                >
+                  See the proof here →
+                </a>
+              </p>
+            </div>
+            <div className="mt-8 font-playfair italic text-gold">"Your success is my only metric."</div>
           </Reveal>
 
           <Reveal className="bg-accent/10 border border-accent/35 rounded-xl p-4 text-center text-accent font-bold text-[15px] mt-5">
