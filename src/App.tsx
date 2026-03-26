@@ -1135,7 +1135,7 @@ export default function App() {
             >
               👉 SEE HOW AI BUSINESS MASTERY WORKS
             </a>
-            <p className="text-sm text-muted mt-4">Discover the beginner roadmap to start your AI income journey</p>
+            <p className="text-sm text-muted mt-4">Discover the beginner's roadmap to start your AI Income journey</p>
           </Reveal>
 
           <Reveal className="mt-15 border-t border-[#222] pt-12">
