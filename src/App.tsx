@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, useInView } from 'motion/react';
-import { Check, X, Star, Play, ChevronRight, Clock, MapPin, Award, Users, Lightbulb, Zap, Linkedin } from 'lucide-react';
+import { motion, useInView, AnimatePresence } from 'motion/react';
+import { Check, X, Star, Play, ChevronRight, Clock, MapPin, Award, Users, Lightbulb, Zap, Linkedin, Lock, ShieldCheck } from 'lucide-react';
 
 interface RevealProps {
   children: React.ReactNode;
@@ -90,8 +90,201 @@ const CountdownTimer = () => {
   );
 };
 
+const WamationModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
+  const [showTerms, setShowTerms] = useState(false);
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-6">
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+          />
+          <motion.div 
+            initial={{ scale: 0.95, opacity: 0, y: 30 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.95, opacity: 0, y: 30 }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            className="relative w-full max-w-[440px] bg-[#0D0D0D] border border-gold/20 rounded-[24px] p-6 md:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-y-auto max-h-[90vh] custom-scrollbar"
+          >
+            {/* Premium Background Accents */}
+            <div className="absolute -top-24 -right-24 w-48 h-48 bg-gold/5 rounded-full blur-[80px] pointer-events-none"></div>
+            <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-accent/5 rounded-full blur-[80px] pointer-events-none"></div>
+
+            {/* Close Button */}
+            <button 
+              onClick={onClose} 
+              className="absolute top-4 right-4 text-muted hover:text-white transition-colors z-50 p-2 hover:bg-white/5 rounded-full"
+            >
+              <X size={18} />
+            </button>
+
+            {/* Form Content */}
+            <div className="text-center mb-6 relative z-10">
+              <div className="inline-flex items-center gap-2 bg-gold/10 border border-gold/20 rounded-full px-3 py-1 text-[10px] font-black text-gold tracking-[0.15em] uppercase mb-4 mx-auto">
+                <ShieldCheck size={12} /> Secure Access
+              </div>
+              <h3 className="font-playfair text-[24px] md:text-[28px] font-black text-white leading-tight mb-2">
+                Claim Your <span className="text-gold">Exclusive Bonuses</span>
+              </h3>
+              <p className="text-muted text-[13px] leading-relaxed max-w-[300px] mx-auto opacity-80">
+                Enter your details below to secure your spot and access the offer page instantly.
+              </p>
+            </div>
+
+            <form 
+              className="space-y-4 relative z-10"
+              onSubmit={async (e) => {
+                e.preventDefault();
+                const form = e.currentTarget;
+                const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+                
+                if (submitBtn) {
+                  submitBtn.disabled = true;
+                  submitBtn.innerHTML = '<span class="flex items-center justify-center gap-2"><svg class="animate-spin h-5 w-5 text-dark" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> REDIRECTING...</span>';
+                }
+
+                const formData = new FormData(form);
+                const offerUrl = "https://aibusinessmastery.me/r/carameldigitals";
+
+                try {
+                  // Dispatch lead data to Wamation processor
+                  // We use no-cors because the processor doesn't support CORS for AJAX
+                  // This is a "fire and forget" submission that works reliably
+                  fetch("https://app.wamation.com.ng/processor", {
+                    method: 'POST',
+                    body: formData,
+                    mode: 'no-cors',
+                  });
+                } catch (err) {
+                  console.error("Submission error:", err);
+                }
+
+                // Immediate forced redirect to the offer page
+                // We use a tiny delay to ensure the fetch request is dispatched
+                setTimeout(() => {
+                  onClose();
+                  window.open(offerUrl, "_blank");
+                }, 150);
+              }}
+            >
+              {/* Wamation Hidden Fields */}
+              <input type="hidden" name="zq" value="41213" />
+              <input type="hidden" name="fid" value="efa26c9bb941213" />
+              <input type="hidden" name="redirect" value="https://aibusinessmastery.me/r/carameldigitals" />
+              <input type="hidden" name="pid" value="" />
+              <input type="hidden" name="bumppid" value="0" />
+              <input type="hidden" name="cid" value="" />
+              <input type="hidden" name="usp" value="0" />
+              <input type="hidden" name="grk" value="" />
+              <input type="hidden" name="pvar" value="" />
+
+              <div className="space-y-1.5">
+                <label className="block text-[9px] font-black text-gold uppercase tracking-[0.15em] ml-1 opacity-70">Full Name</label>
+                <input 
+                  type="text" 
+                  name="name" 
+                  required 
+                  placeholder="e.g. Elizabeth Emmanuel"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl p-3.5 text-white outline-none focus:border-gold/50 focus:bg-gold/5 transition-all placeholder:text-muted/20 text-sm"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="block text-[9px] font-black text-gold uppercase tracking-[0.15em] ml-1 opacity-70">WhatsApp Number</label>
+                <div className="flex gap-2">
+                  <div className="relative w-[90px] shrink-0">
+                    <select 
+                      name="wnopfx" 
+                      className="w-full bg-white/5 border border-white/10 rounded-xl p-3.5 text-white outline-none focus:border-gold/50 focus:bg-gold/5 transition-all text-xs appearance-none cursor-pointer"
+                      defaultValue="234"
+                    >
+                      <option value="234" className="bg-dark">🇳🇬 +234</option>
+                      <option value="1" className="bg-dark">🇺🇸 +1</option>
+                      <option value="44" className="bg-dark">🇬🇧 +44</option>
+                      <option value="27" className="bg-dark">🇿🇦 +27</option>
+                      <option value="233" className="bg-dark">🇬🇭 +233</option>
+                      <option value="254" className="bg-dark">🇰🇪 +254</option>
+                    </select>
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted/50">
+                      <ChevronRight size={12} className="rotate-90" />
+                    </div>
+                  </div>
+                  <input 
+                    type="number" 
+                    name="waphone" 
+                    required 
+                    placeholder="08012345678"
+                    className="flex-1 bg-white/5 border border-white/10 rounded-xl p-3.5 text-white outline-none focus:border-gold/50 focus:bg-gold/5 transition-all placeholder:text-muted/20 text-sm"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="block text-[9px] font-black text-gold uppercase tracking-[0.15em] ml-1 opacity-70">Email Address</label>
+                <input 
+                  type="email" 
+                  name="email" 
+                  required 
+                  placeholder="your@email.com"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl p-3.5 text-white outline-none focus:border-gold/50 focus:bg-gold/5 transition-all placeholder:text-muted/20 text-sm"
+                />
+              </div>
+
+              <div className="pt-1">
+                <label className="flex items-start gap-2.5 cursor-pointer group">
+                  <div className="relative flex items-center justify-center mt-0.5">
+                    <input type="checkbox" required className="peer sr-only" id="terms" />
+                    <div className="w-4 h-4 border border-white/20 rounded peer-checked:bg-gold peer-checked:border-gold transition-all"></div>
+                    <Check size={10} className="absolute text-dark opacity-0 peer-checked:opacity-100 transition-opacity" />
+                  </div>
+                  <span className="text-[10px] text-muted leading-tight group-hover:text-muted/80 transition-colors">
+                    I agree to the <button type="button" onClick={() => setShowTerms(!showTerms)} className="text-gold underline font-bold">Terms & Conditions</button>.
+                  </span>
+                </label>
+                
+                {showTerms && (
+                  <motion.div 
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    className="mt-2 p-3 bg-white/5 rounded-lg text-[9px] text-muted/60 leading-relaxed border border-white/5 max-h-[80px] overflow-y-auto"
+                  >
+                    BY SUBMITTING THIS FORM, You agree to receive relevant AI business tips and updates via your WhatsApp DM and emails. The templates provided are for personal/internal use only. © 2026 Caramel Digitals.
+                  </motion.div>
+                )}
+              </div>
+
+              <button 
+                type="submit"
+                className="w-full bg-[linear-gradient(135deg,var(--color-gold)_0%,var(--color-accent2)_100%)] text-dark font-black py-4 rounded-xl shadow-[0_8px_20px_rgba(201,168,76,0.2)] hover:-translate-y-0.5 hover:shadow-[0_12px_30px_rgba(201,168,76,0.3)] active:scale-[0.98] transition-all mt-2 text-sm tracking-tight"
+              >
+                YES! GIVE ME ACCESS NOW →
+              </button>
+
+              <div className="flex items-center justify-center gap-1.5 text-[9px] text-muted/40 mt-4">
+                <Lock size={9} />
+                <span>256-bit SSL Encrypted & Secure</span>
+              </div>
+            </form>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
+  );
+};
+
 export default function App() {
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = (e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
+    setIsModalOpen(true);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -116,10 +309,9 @@ export default function App() {
             🔥 ONLY 7 SPOTS LEFT
           </div>
           <a 
-            href="https://wa.link/2ctel3" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 bg-[linear-gradient(135deg,var(--color-gold)_0%,var(--color-accent2)_100%)] text-dark font-black py-4 rounded-full shadow-[0_10px_30px_rgba(201,168,76,0.5)] active:scale-95 transition-transform"
+            href="#" 
+            onClick={openModal}
+            className="flex items-center justify-center gap-2 bg-[linear-gradient(135deg,var(--color-gold)_0%,var(--color-accent2)_100%)] text-dark font-black py-4 rounded-full shadow-[0_10px_30px_rgba(201,168,76,0.5)] active:scale-95 transition-transform pointer-events-auto"
           >
             <Zap size={18} fill="currentColor" />
             CLAIM MY ₦130K BONUS PACKAGE
@@ -827,9 +1019,8 @@ export default function App() {
               </div>
             </div>
             <a 
-              href="https://wa.link/2ctel3" 
-              target="_blank" 
-              rel="noopener noreferrer"
+              href="#" 
+              onClick={openModal}
               className="inline-block bg-dark text-white font-black text-base no-underline px-12 py-4.5 rounded-full tracking-tight shadow-xl transition-all hover:-translate-y-1 hover:scale-105 z-30 relative cursor-pointer"
             >
               👉 CLAIM YOUR SPOT & BONUSES NOW
@@ -966,6 +1157,7 @@ export default function App() {
       <footer className="bg-[#0a0a0a] border-t border-[#1a1a1a] py-7 px-5 text-center">
         <p className="text-muted text-[13px]">© 2026 Caramel Digital Academy · Elizabeth Emmanuel · All Rights Reserved</p>
       </footer>
+      <WamationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 }
