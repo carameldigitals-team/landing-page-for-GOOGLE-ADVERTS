@@ -379,12 +379,7 @@ export default function App() {
       {/* HERO IMAGE */}
       <Reveal className="text-center py-3 px-5 mb-12">
         <div className="container">
-          <a 
-            href="https://aibusinessmastery.me/r/carameldigitals" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="block transition-transform hover:scale-[1.01] relative z-30 cursor-pointer"
-          >
+          <div className="block transition-transform hover:scale-[1.01] relative z-30">
             <img 
               src="https://i.ibb.co/Q3NVhqjh/gnwwg4.jpg" 
               alt="AI Business Mastery" 
@@ -395,7 +390,7 @@ export default function App() {
               <div className="font-bold text-white uppercase tracking-widest">ELIZABETH EMMANUEL</div>
               <div className="italic text-gold text-sm mt-1">Your Digital Leverage Guide, Online Business & AI Monetization Strategist</div>
             </div>
-          </a>
+          </div>
         </div>
       </Reveal>
 
@@ -815,41 +810,7 @@ export default function App() {
           <Reveal className="section-label text-center">Social Proof</Reveal>
           <Reveal className="h2-serif text-center">Here's What AI Business Mastery<br />Participants Are Saying</Reveal>
 
-          <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-5 mt-10">
-            {[
-              { 
-                name: "Adaeze O.", 
-                role: "ABM Participant, Abuja", 
-                text: "Before this training I was completely overwhelmed by AI tools — I didn't know where to start or what to focus on. After going through the program, I finally understand how to use them to create real opportunities. The clarity alone was worth everything." 
-              },
-              { 
-                name: "Tunde K.", 
-                role: "ABM Student, Lagos", 
-                text: "This program simplified absolutely everything for me. I stopped jumping from tutorial to tutorial and finally had one clear, proven direction. Within weeks I went from confused to confident with a real income path." 
-              },
-              { 
-                name: "Ngozi N.", 
-                role: "Program Member, Port Harcourt", 
-                text: "AI Business Mastery completely changed how I see AI tools. I used to think they were for tech experts only. Now I use them every day to generate income. If you've been sitting on the fence, stop waiting." 
-              }
-            ].map((testi, i) => (
-              <Reveal key={i} className="bg-dark2 border border-[#2a2a2a] rounded-2xl p-7 transition-colors hover:border-gold/40">
-                <div className="text-gold text-base mb-3.5 tracking-[2px]">★★★★★</div>
-                <p className="text-[15px] text-[#E8E0D0] leading-relaxed mb-5 italic">"{testi.text}"</p>
-                <div className="flex items-center gap-3">
-                  <div className="w-[42px] h-[42px] rounded-full bg-[linear-gradient(135deg,#C9A84C,#F7A033)] flex items-center justify-center font-black text-dark text-[15px] shrink-0">
-                    {testi.name.split(' ')[0][0]}{testi.name.split(' ')[1][0]}
-                  </div>
-                  <div>
-                    <div className="font-bold text-white text-sm">{testi.name}</div>
-                    <div className="text-xs text-muted">{testi.role}</div>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-
-          <Reveal className="text-center mt-15 mb-6">
+          <Reveal className="text-center mb-6">
             <div className="section-label">Video Testimony</div>
             <h3 className="h3-serif">Watch Their Success Story</h3>
           </Reveal>
@@ -868,14 +829,10 @@ export default function App() {
           </Reveal>
           <div className="flex gap-4 mt-8 justify-center flex-wrap">
             <Reveal className="w-[300px]">
-              <a href="https://ibb.co/YF0x535g" target="_blank" rel="noopener noreferrer">
-                <img src="https://i.ibb.co/q3JvHdH6/In-Shot-20260303-221504719.jpg" alt="AI Business Mastery Testimonial" className="rounded-xl border-2 border-gold/20 object-cover w-full" referrerPolicy="no-referrer" />
-              </a>
+              <img src="https://i.ibb.co/q3JvHdH6/In-Shot-20260303-221504719.jpg" alt="AI Business Mastery Testimonial" className="rounded-xl border-2 border-gold/20 object-cover w-full" referrerPolicy="no-referrer" />
             </Reveal>
             <Reveal className="w-[300px]">
-              <a href="https://ibb.co/dJMvs7nh" target="_blank" rel="noopener noreferrer">
-                <img src="https://i.ibb.co/prwT6nCm/In-Shot-20260303-222042968.jpg" alt="AI Business Mastery Testimonial" className="rounded-xl border-2 border-gold/20 object-cover w-full" referrerPolicy="no-referrer" />
-              </a>
+              <img src="https://i.ibb.co/prwT6nCm/In-Shot-20260303-222042968.jpg" alt="AI Business Mastery Testimonial" className="rounded-xl border-2 border-gold/20 object-cover w-full" referrerPolicy="no-referrer" />
             </Reveal>
           </div>
         </div>
