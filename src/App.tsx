@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'motion/react';
-import { Check, X, Star, Play, ChevronRight, Clock, MapPin, Award, Users, Lightbulb, Zap, Linkedin, Lock, ShieldCheck, MessageSquare, TrendingUp, Target } from 'lucide-react';
+import { Check, X, Star, Play, ChevronRight, Clock, MapPin, Award, Users, Lightbulb, Zap, Linkedin, Lock, ShieldCheck, MessageSquare, TrendingUp, Target, Rocket } from 'lucide-react';
 
 interface RevealProps {
   children: React.ReactNode;
@@ -81,8 +81,8 @@ const RegistrationNotification = () => {
           exit={{ x: -100, opacity: 0 }}
           className="fixed bottom-28 md:bottom-6 left-4 z-[150] bg-white/95 backdrop-blur-md border border-brand-blue/10 rounded-lg p-2.5 shadow-[0_8px_25px_rgba(0,0,0,0.15)] flex items-center gap-2.5 max-w-[220px]"
         >
-          <div className="w-8 h-8 rounded-full bg-brand-blue flex items-center justify-center text-white shrink-0">
-            <Users size={16} />
+          <div className="w-8 h-8 rounded-full bg-brand-blue flex items-center justify-center text-white shrink-0 shadow-[0_0_15px_rgba(0,51,102,0.3)]">
+            <Rocket size={16} fill="currentColor" className="text-gold" />
           </div>
           <div className="text-[11px] text-brand-blue font-semibold leading-tight">
             {notifications[index]}
