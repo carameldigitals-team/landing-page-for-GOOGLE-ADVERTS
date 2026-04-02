@@ -328,6 +328,7 @@ const WamationModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => vo
 export default function App() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   const openModal = (e?: React.MouseEvent) => {
     if (e) e.preventDefault();
@@ -411,6 +412,45 @@ export default function App() {
               </div>
               <CountdownTimer />
             </Reveal>
+
+            <Reveal className="text-center max-w-[700px] mx-auto mb-10">
+              <div className="section-label mx-auto">Watch This First</div>
+              <h3 className="h2-serif text-[clamp(24px,4vw,36px)] leading-tight mb-4">A Personal Message From Elizabeth</h3>
+              <p className="text-base text-muted leading-relaxed">Watch this short video to see exactly how this system works.</p>
+            </Reveal>
+
+            <Reveal className="max-w-[800px] w-full mx-auto rounded-[32px] overflow-hidden border-4 border-gold/20 shadow-[0_40px_100px_rgba(0,0,0,0.8),0_0_0_1px_rgba(201,168,76,0.1)] relative bg-black aspect-video group mb-12">
+              {!isVideoPlaying ? (
+                <div 
+                  className="absolute inset-0 cursor-pointer group/play"
+                  onClick={() => setIsVideoPlaying(true)}
+                >
+                  <img 
+                    src="https://img.youtube.com/vi/pkXoRyAu3T0/maxresdefault.jpg" 
+                    alt="AI Business Mastery Video Thumbnail"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover/play:scale-105"
+                    referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = "https://img.youtube.com/vi/pkXoRyAu3T0/hqdefault.jpg";
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-black/30 group-hover/play:bg-black/10 transition-colors duration-500 flex items-center justify-center">
+                    <div className="w-20 h-20 bg-gold rounded-full flex items-center justify-center shadow-[0_0_50px_rgba(201,168,76,0.5)] group-hover/play:scale-110 group-hover/play:bg-gold-light transition-all duration-500">
+                      <Play size={32} fill="currentColor" className="text-dark ml-1" />
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <iframe
+                  src="https://www.youtube.com/embed/pkXoRyAu3T0?si=Ktd_AgWEkx7yBACR&autoplay=1"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  title="Elizabeth Emmanuel — AI Business Mastery"
+                  className="absolute inset-0 w-full h-full border-none z-0"
+                ></iframe>
+              )}
+            </Reveal>
+
             <a 
               href="https://aibusinessmastery.me/r/carameldigitals" 
               target="_blank" 
@@ -497,31 +537,6 @@ export default function App() {
               </Reveal>
             ))}
           </div>
-
-          {/* EARLY SOCIAL PROOF BANNER */}
-          <Reveal className="bg-gold/5 border border-gold/20 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-gold/20 rounded-full flex items-center justify-center shrink-0">
-                <MessageSquare className="text-gold" size={24} />
-              </div>
-              <div>
-                <div className="text-white font-bold">Real Messages. Real People. Real Results.</div>
-                <div className="text-sm text-gold/80">Join 1,000+ professionals who stopped watching and started acting.</div>
-              </div>
-            </div>
-            <div className="flex -space-x-3">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <img 
-                  key={i} 
-                  src={`https://i.pravatar.cc/150?u=${i + 10}`} 
-                  alt="User" 
-                  className="w-10 h-10 rounded-full border-2 border-[#0D0D0D]"
-                  referrerPolicy="no-referrer"
-                />
-              ))}
-              <div className="w-10 h-10 rounded-full border-2 border-[#0D0D0D] bg-gold text-dark flex items-center justify-center text-[10px] font-black">+1k</div>
-            </div>
-          </Reveal>
         </div>
       </section>
 
@@ -593,10 +608,23 @@ export default function App() {
 
             <div className="bg-[#001a33] border-l-4 border-gold p-9 my-12 rounded-r-xl relative">
               <div className="absolute top-[-20px] left-4 font-playfair text-[120px] text-gold/8 leading-none pointer-events-none">"</div>
-              <div className="flex items-center gap-3 mb-5">
-                <div className="w-[50px] h-[50px] rounded-full bg-[linear-gradient(135deg,#C9A84C_0%,#F7A033_100%)] flex items-center justify-center font-black text-lg text-dark shrink-0">CE</div>
-                <div className="font-bold text-white text-base">
-                  Chukwuemeka Obi <span className="block text-[13px] text-gold font-normal">Software Sales Rep, Lagos</span>
+              <div className="flex flex-col md:flex-row items-center md:items-start gap-6 mb-8">
+                <div className="relative shrink-0">
+                  <div className="absolute inset-0 bg-gold/20 rounded-full blur-xl animate-pulse"></div>
+                  <img 
+                    src="https://i.ibb.co/hxxvKP9p/CHUKWUEMEKA.png" 
+                    alt="Chukwuemeka Obi" 
+                    className="w-32 h-32 md:w-44 md:h-44 rounded-full object-cover border-4 border-gold shadow-[0_10px_30px_rgba(201,168,76,0.3)] relative z-10"
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
+                <div className="text-center md:text-left pt-2">
+                  <div className="font-playfair text-2xl md:text-3xl font-black text-white mb-1">
+                    Chukwuemeka Obi
+                  </div>
+                  <div className="text-gold font-bold tracking-wider uppercase text-xs md:text-sm">
+                    Software Sales Rep, Lagos
+                  </div>
                 </div>
               </div>
               <div className="space-y-4.5">
@@ -737,36 +765,6 @@ export default function App() {
               </ul>
             </Reveal>
           </div>
-        </div>
-      </section>
-
-      {/* VIDEO SECTION */}
-      <section className="bg-[#000d1a] py-24 border-y border-brand-blue/10 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,51,102,0.1)_0%,transparent_70%)] pointer-events-none"></div>
-        <div className="container relative z-10">
-          <Reveal className="text-center max-w-[700px] mx-auto mb-12">
-            <div className="section-label mx-auto">Watch This First</div>
-            <h3 className="h2-serif text-[clamp(24px,4vw,42px)] leading-tight mb-6">A Personal Message From Elizabeth —<br />Before You Read Another Word</h3>
-            <p className="text-lg text-muted leading-relaxed">Watch this short video to hear Elizabeth explain exactly why so many smart, ambitious professionals are stuck — and what the AI Business Mastery system does differently.</p>
-          </Reveal>
-          <Reveal className="max-w-[800px] mx-auto rounded-[32px] overflow-hidden border-4 border-gold/20 shadow-[0_40px_100px_rgba(0,0,0,0.8),0_0_0_1px_rgba(201,168,76,0.1)] relative bg-black aspect-video group">
-            <div className="absolute inset-0 bg-gold/5 group-hover:bg-transparent transition-colors duration-700 pointer-events-none z-10"></div>
-            <iframe
-              src="https://www.youtube.com/embed/pkXoRyAu3T0?si=Ktd_AgWEkx7yBACR"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              title="Elizabeth Emmanuel — AI Business Mastery"
-              className="absolute inset-0 w-full h-full border-none z-0"
-            ></iframe>
-          </Reveal>
-          <Reveal className="flex items-center justify-center gap-3 mt-10 text-gold font-black uppercase tracking-[0.2em] text-xs">
-            <div className="w-8 h-px bg-gold/30"></div>
-            <div className="flex items-center gap-2">
-              <Play size={14} fill="currentColor" className="animate-pulse" />
-              Watch the full video above before scrolling
-            </div>
-            <div className="w-8 h-px bg-gold/30"></div>
-          </Reveal>
         </div>
       </section>
 
