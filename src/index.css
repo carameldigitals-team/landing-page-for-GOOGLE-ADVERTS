@@ -30,7 +30,7 @@
   }
   
   .section-label {
-    @apply text-[11px] font-black tracking-[0.2em] uppercase text-gold mb-3;
+    @apply text-[13px] font-black tracking-[0.2em] uppercase text-gold mb-4 mt-8;
   }
   
   .h2-serif {
@@ -44,4 +44,13 @@
   .big-text {
     @apply text-[clamp(18px,2.5vw,22px)] leading-relaxed;
   }
+}
+
+@keyframes pulse-slow {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.02); opacity: 0.95; }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s ease-in-out infinite;
 }

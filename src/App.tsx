@@ -15,9 +15,13 @@ const Reveal = ({ children, className = "" }: RevealProps) => {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-      transition={{ duration: 0.7, ease: "easeOut" }}
+      initial={{ opacity: 0, y: 40, scale: 0.96 }}
+      animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 40, scale: 0.96 }}
+      transition={{ 
+        duration: 0.9, 
+        ease: [0.16, 1, 0.3, 1], // Premium smooth quintic ease-out
+        delay: 0.1 
+      }}
       className={className}
     >
       {children}
@@ -123,15 +127,15 @@ const CountdownTimer = () => {
   const pad = (n: number) => String(n).padStart(2, '0');
 
   return (
-    <div className="flex justify-center gap-4 mb-3">
+    <div className="flex justify-center gap-3 mb-3">
       {[
         { val: pad(timeLeft.h), label: 'Hours' },
         { val: pad(timeLeft.m), label: 'Mins' },
         { val: pad(timeLeft.s), label: 'Secs' }
       ].map((block, i) => (
-        <div key={i} className="bg-black/40 border border-gold/30 rounded-lg py-3 px-4 min-w-[72px]">
-          <div className="font-playfair text-[38px] font-black text-gold leading-none">{block.val}</div>
-          <div className="text-[11px] font-bold tracking-widest uppercase text-muted mt-1.5">{block.label}</div>
+        <div key={i} className="bg-black/40 border border-gold/30 rounded-lg py-2 px-3 min-w-[60px]">
+          <div className="font-playfair text-[28px] font-black text-gold leading-none">{block.val}</div>
+          <div className="text-[9px] font-bold tracking-widest uppercase text-muted mt-1">{block.label}</div>
         </div>
       ))}
     </div>
@@ -346,33 +350,9 @@ export default function App() {
 
   return (
     <div className="min-h-screen">
-      {/* STICKY MOBILE CTA */}
-      <div className="fixed bottom-6 left-0 right-0 z-[100] px-6 md:hidden pointer-events-none">
-        <motion.div 
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 2, duration: 0.5 }}
-          className="pointer-events-auto"
-        >
-          <a 
-            href="#" 
-            onClick={openModal}
-            className="flex flex-col items-center justify-center gap-1 bg-[linear-gradient(135deg,var(--color-brand-blue)_0%,var(--color-brand-blue-light)_100%)] text-white font-black py-4 rounded-full shadow-[0_10px_30px_rgba(0,51,102,0.5)] active:scale-95 transition-transform pointer-events-auto px-6"
-          >
-            <div className="flex items-center gap-2">
-              <Zap size={18} fill="currentColor" />
-              <span>UNLOCK YOUR PREMIUM AI BUSINESS MASTERY BONUS SUITE</span>
-            </div>
-            <div className="text-[10px] text-gold font-bold text-center leading-tight">
-              Carefully selected tools & resources to help you implement faster and get results.
-            </div>
-          </a>
-        </motion.div>
-      </div>
-
       {/* URGENCY BAR */}
       <div className="bg-brand-blue text-white text-center py-2.5 px-5 font-bold text-sm tracking-wider animate-pulse z-50 relative">
-        Attention: African Professionals & Entrepreneurs Ready to Build Profitable AI-Powered Businesses without Guesswork
+        <span className="text-gold">Attention:</span> African Professionals & Entrepreneurs Ready to Build Profitable AI-Powered Businesses without Guesswork
       </div>
 
       {/* PROGRESS BAR */}
@@ -396,23 +376,18 @@ export default function App() {
       <section className="relative overflow-hidden bg-[linear-gradient(160deg,#0D0D0D_0%,#001a33_50%,#0D0D0D_100%)] pt-16 pb-20 text-center">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(201,168,76,0.15)_0%,transparent_70%)] pointer-events-none"></div>
         <div className="container relative z-10">
-          <h1 className="font-playfair text-[clamp(32px,6vw,64px)] font-black leading-[1.1] text-white mb-6 max-w-[1000px] mx-auto">
-            Stop Watching Tutorials and <span className="text-gold relative">Start Getting Paid.<span className="absolute bottom-1 left-0 w-full h-1 bg-gold/30 -rotate-1"></span></span>
-          </h1>
-          <p className="text-[clamp(18px,2.5vw,28px)] font-bold text-white/90 mb-8 max-w-[850px] mx-auto leading-tight">
-            The Step-by-Step AI Blueprint Nigerian Professionals are Using to Create a Second Income Stream in Under 72 Hours.
-          </p>
-          <p className="text-[clamp(16px,2vw,20px)] text-muted italic max-w-[650px] mx-auto mb-10 leading-relaxed">
-            "You've watched the tutorials. You've saved the posts. You've joined the WhatsApp groups. And yet — nothing has turned into real income."
-          </p>
+          <Reveal>
+            <h1 className="font-playfair text-[clamp(32px,6vw,64px)] font-black leading-[1.1] text-white mb-6 max-w-[1000px] mx-auto">
+              Stop Watching Tutorials and <span className="text-gold relative">Start Getting Paid.<span className="absolute bottom-1 left-0 w-full h-1 bg-gold/30 -rotate-1"></span></span>
+            </h1>
+            <p className="text-[clamp(18px,2.5vw,28px)] font-bold text-white/90 mb-8 max-w-[850px] mx-auto leading-tight">
+              The Step-by-Step Blueprint to Turn <span className="text-gold">FREE AI TOOLS</span> into a Second Income Stream in Under 72 Hours.
+            </p>
+            <p className="text-[clamp(16px,2vw,20px)] text-muted italic max-w-[650px] mx-auto mb-10 leading-relaxed">
+              "You've watched the tutorials. You've saved the posts. You've joined the WhatsApp groups. And yet — nothing has turned into real income."
+            </p>
+          </Reveal>
           <div className="flex flex-col items-center justify-center">
-            <Reveal className="mb-8">
-              <div className="text-[11px] font-black tracking-[0.2em] text-accent mb-4 flex items-center gap-2 justify-center">
-                <Clock size={14} /> FAST-ACTION BONUS EXPIRES IN:
-              </div>
-              <CountdownTimer />
-            </Reveal>
-
             <Reveal className="text-center max-w-[700px] mx-auto mb-10">
               <div className="section-label mx-auto">Watch This First</div>
               <h3 className="h2-serif text-[clamp(24px,4vw,36px)] leading-tight mb-4">A Personal Message From Elizabeth</h3>
@@ -455,19 +430,38 @@ export default function App() {
               href="https://aibusinessmastery.me/r/carameldigitals" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="inline-block bg-[linear-gradient(135deg,var(--color-brand-blue)_0%,var(--color-brand-blue-light)_100%)] text-white font-black text-lg no-underline px-12 py-5 rounded-full tracking-tight shadow-[0_20px_50px_rgba(0,51,102,0.4)] transition-all hover:-translate-y-1 hover:scale-105 hover:shadow-[0_25px_60px_rgba(0,51,102,0.5)] z-30 relative mb-12 cursor-pointer group"
+              className="inline-block bg-[linear-gradient(135deg,var(--color-brand-blue)_0%,var(--color-brand-blue-light)_100%)] text-white font-black text-[11px] sm:text-xs md:text-base no-underline px-6 sm:px-8 py-4 rounded-full tracking-tight shadow-[0_20px_50px_rgba(0,51,102,0.4)] transition-all hover:-translate-y-1 hover:scale-105 hover:shadow-[0_25px_60px_rgba(0,51,102,0.5)] z-30 relative mb-8 cursor-pointer group whitespace-nowrap"
             >
-              <span className="flex items-center gap-3">
-                👉 SEE HOW IT WORKS <ChevronRight size={20} className="group-hover:translate-x-1 transition-transform" />
+              <span className="flex items-center gap-2">
+                👉 SEE HOW IT WORKS <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </span>
             </a>
-            
-            <Reveal className="flex flex-wrap justify-center gap-8 opacity-50 grayscale hover:grayscale-0 transition-all duration-700">
-              <div className="text-[10px] font-black uppercase tracking-widest text-white/60">Trusted By Professionals From:</div>
-              <div className="font-black text-white/40 text-xs tracking-tighter">KPMG</div>
-              <div className="font-black text-white/40 text-xs tracking-tighter">GTBANK</div>
-              <div className="font-black text-white/40 text-xs tracking-tighter">MTN</div>
-              <div className="font-black text-white/40 text-xs tracking-tighter">INTERSWITCH</div>
+
+            <Reveal className="mb-12">
+              <CountdownTimer />
+              <div className="text-[11px] font-black tracking-[0.2em] text-accent mt-4 flex items-center gap-2 justify-center">
+                <Clock size={14} /> FAST-ACTION BONUS EXPIRES IN:
+              </div>
+            </Reveal>
+
+            {/* TRUST BAR */}
+            <Reveal className="w-full max-w-[900px] mx-auto pt-8 border-t border-white/10 flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+              <div className="flex items-center gap-2">
+                <Users size={20} className="text-gold" />
+                <span className="text-xs font-black tracking-widest uppercase">1,000+ TRAINED</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <ShieldCheck size={20} className="text-gold" />
+                <span className="text-xs font-black tracking-widest uppercase">VERIFIED RESULTS</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Award size={20} className="text-gold" />
+                <span className="text-xs font-black tracking-widest uppercase">PREMIUM SYSTEM</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Star size={20} className="text-gold" fill="currentColor" />
+                <span className="text-xs font-black tracking-widest uppercase">5-STAR RATED</span>
+              </div>
             </Reveal>
           </div>
         </div>
@@ -516,7 +510,7 @@ export default function App() {
       </section>
 
       {/* PROBLEM SECTION */}
-      <section className="py-24 bg-[#0D0D0D] relative">
+      <section className="pt-24 pb-8 bg-[#0D0D0D] relative">
         <div className="container">
           <Reveal className="section-label">The Problem</Reveal>
           <h2 className="h2-serif text-[clamp(28px,4.5vw,48px)] mb-8">Why Most Professionals Are Still<br />"Watching" Instead of "Earning"</h2>
@@ -524,7 +518,7 @@ export default function App() {
             It's called <strong className="text-white">Tutorial Hell.</strong> You have 50 tabs open, 10 saved YouTube playlists, and a head full of "AI possibilities" — but your bank account hasn't felt a single kobo of it.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             {[
               { title: "Information Overload", desc: "Too many tools, too many 'gurus', and no clear starting point.", icon: "🤯" },
               { title: "The 'Tech' Fear", desc: "Thinking you need to be a coder or a math genius to use AI.", icon: "💻" },
@@ -539,6 +533,26 @@ export default function App() {
           </div>
         </div>
       </section>
+
+      {/* THE REAL PROBLEM */}
+      <section className="pt-0 pb-15">
+        <div className="container">
+          <Reveal>
+            <div className="section-label">The Root Cause</div>
+            <h2 className="h2-serif">You're Stuck in "AI Information Overload"</h2>
+            <p className="big-text">Every single day you see new AI tools, new tutorials, new side hustle ideas, and new claims of online income. But <strong className="text-white">nobody shows you a clear, step-by-step system to actually start.</strong></p>
+            <p>So you keep learning. And learning. And nothing becomes income.</p>
+
+            <div className="bg-[linear-gradient(135deg,#1a1207_0%,#0f0d08_100%)] border border-gold/25 rounded-2xl p-10 my-10 text-center">
+              <p className="font-playfair text-[clamp(18px,2.8vw,26px)] italic text-white leading-relaxed">
+                The problem isn't that there's <span className="text-gold">too little</span> information.<br />The problem is there's <span className="text-gold">too much</span> — and none of it is organized into a clear action plan <span className="text-gold">built for you.</span>
+              </p>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <div className="h-px bg-[linear-gradient(90deg,transparent,#C9A84C,transparent)] opacity-30"></div>
 
       {/* WHO THIS IS FOR / NOT FOR */}
       <section className="py-15 bg-[#001226] border-y border-brand-blue/10">
@@ -600,7 +614,7 @@ export default function App() {
       </section>
 
       {/* STORYTELLING */}
-      <section className="py-15 pt-0 bg-[#000d1a]">
+      <section className="py-15 pt-16 bg-[#000d1a]">
         <div className="container">
           <Reveal>
             <div className="section-label">A Real Story — From Someone Just Like You</div>
@@ -627,24 +641,33 @@ export default function App() {
                   </div>
                 </div>
               </div>
-              <div className="space-y-4.5">
-                <p>"FOR CLOSE TO 3 MONTHS, I HAD WATCHED OVER 200 YOU TUBE VIDEOS ON HOW TO MAKE MONEY WITH AI.</p>
-                <p>I had downloaded several AI apps; I had created accounts on five freelance platforms. But every time I was about to start, I would find another video that would introduce a new tool or a better strategy. And I'd start over again.</p>
+              <div className="space-y-6">
+                <p className="text-lg font-bold text-white/90">"FOR CLOSE TO 3 MONTHS, I HAD WATCHED OVER 200 YOUTUBE VIDEOS ON HOW TO MAKE MONEY WITH AI.</p>
+                
+                <p>I had downloaded several AI apps; I had created accounts on five freelance platforms. But every time I was about to start, I would find another video that would introduce a new tool or a better strategy. <strong className="text-gold">And I'd start over again.</strong></p>
+                
                 <p>My colleagues would see me on my phone during lunch break and say, 'Emeka, you're always studying — when are you going to start?' I didn't have an answer. Because honestly? I didn't know where to begin. The information was everywhere. The clarity was nowhere.</p>
-                <p>One evening in January 2026, I came across the <strong className="text-gold">AI 72-Hour Challenge — Income Execution Sprint</strong>. I almost scrolled past it. I had been disappointed before. But something about it was different — it promised to give me a system, not just more information. So I decided to give it one last try.</p>
-                <p>By the end of the first session, I understood something I had missed for months: <strong className="text-white">my problem was never knowledge — it was execution.</strong> I had been collecting information like a library. What I needed was a project plan.</p>
-                <p>Within 72 hours, I had built my first AI-powered digital service package, written my first offer, and sent my first pitch to five potential clients. Two of them responded. One paid. It wasn't a life-changing amount — but it was the proof I needed. For the first time in months, I felt like I was moving forward, not just learning."</p>
+                
+                <div className="bg-gold/10 border-l-2 border-gold p-6 my-8 italic text-white/90">
+                  "One evening in January 2026, I came across the <strong className="text-gold">AI 72-Hour Challenge — Income Execution Sprint</strong>. I almost scrolled past it. I had been disappointed before. But something about it was different — it promised to give me a system, not just more information."
+                </div>
+
+                <p>By the end of the first session, I understood something I had missed for months: <strong className="text-white underline decoration-gold underline-offset-4">my problem was never knowledge — it was execution.</strong> I had been collecting information like a library. What I needed was a project plan.</p>
+                
+                <p className="text-lg font-bold text-white">Within 72 hours, I had built my first AI-powered digital service package, written my first offer, and sent my first pitch to five potential clients. Two of them responded. One paid.</p>
+                
+                <p>It wasn't a life-changing amount — but it was the proof I needed. For the first time in months, I felt like I was moving forward, not just learning."</p>
               </div>
             </div>
 
             <p className="big-text">Chukwuemeka's story is not unusual. What was unusual was the moment he stopped consuming and started executing. And that's exactly what the right system can do for you.</p>
             
-            <div className="mt-10 text-center">
+            <div className="mt-8 text-center">
               <a 
                 href="https://aibusinessmastery.me/r/carameldigitals" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="inline-block bg-brand-blue text-white font-bold py-3 px-8 rounded-full hover:bg-brand-blue-light transition-all shadow-lg"
+                className="inline-block bg-brand-blue text-white font-bold py-3 px-6 rounded-full hover:bg-brand-blue-light transition-all shadow-lg text-sm md:text-base"
               >
                 I'm Ready to Stop Consuming & Start Executing →
               </a>
@@ -659,51 +682,48 @@ export default function App() {
       <section className="bg-[#001226] border-y border-brand-blue/20 py-24 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gold/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2"></div>
         <div className="container relative z-10">
-          <Reveal className="flex flex-col lg:flex-row gap-16 items-center">
-            <div className="shrink-0 relative">
+          <Reveal className="max-w-[800px] mx-auto text-center">
+            <div className="relative inline-block mb-10">
               <div className="absolute inset-0 bg-gold/20 rounded-full blur-3xl animate-pulse"></div>
               <img 
-                className="w-64 h-64 md:w-80 md:h-80 rounded-full object-cover border-8 border-gold/20 shadow-[0_0_60px_rgba(201,168,76,0.4)] relative z-10" 
+                className="w-48 h-48 md:w-64 md:h-64 rounded-full object-cover border-8 border-gold/20 shadow-[0_0_60px_rgba(201,168,76,0.4)] relative z-10 mx-auto" 
                 src="https://i.ibb.co/Q3NVhqjh/gnwwg4.jpg" 
                 alt="Elizabeth Emmanuel"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-gold text-dark font-black px-6 py-2 rounded-full text-xs tracking-widest shadow-xl z-20 whitespace-nowrap">
-                MEET YOUR GUIDE
+              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-gold text-dark font-black px-6 py-2 rounded-full text-[10px] tracking-[0.2em] shadow-xl z-20 whitespace-nowrap">
+                YOUR GUIDE
               </div>
             </div>
-            <div className="text-center lg:text-left">
-              <div className="section-label mx-auto lg:mx-0">Your Mentor</div>
-              <h2 className="h2-serif text-[clamp(28px,4vw,48px)] mb-6">I'm Elizabeth Emmanuel</h2>
-              <p className="text-lg text-[#E8E0D0] leading-relaxed mb-8">
-                Digital Leverage Guide & AI Monetization Strategist. Founder of <strong className="text-gold">Caramel Digital Academy</strong> — an online training platform for professionals who want to earn more and leverage the internet to their advantage.
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
-                {[
-                  { icon: Award, text: "1,000+ Professionals Trained" },
-                  { icon: MapPin, text: "Global Impact, Local Context" },
-                  { icon: Lightbulb, text: "Zero Tech Background Required" },
-                  { icon: Users, text: "Community of High Achievers" }
-                ].map((stat, i) => (
-                  <div key={i} className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl px-5 py-4 transition-all hover:bg-white/10">
-                    <stat.icon size={18} className="text-gold" />
-                    <span className="text-sm font-bold text-white/90">{stat.text}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="border-l-4 border-gold px-8 py-6 bg-gold/5 rounded-r-2xl text-xl italic text-[#e0d5c0] mb-10 leading-relaxed shadow-inner">
-                "I've been where you are. I know the frustration of seeing everyone else win while you're  stuck in learning loop. That's why i am confident to recommend the solution that helped me to you too."
-              </div>
-              <a 
-                href="https://www.linkedin.com/in/elizabeth-emmanuel-carameldigitals" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 bg-[#0077B5] text-white font-bold py-4 px-8 rounded-full hover:bg-[#0077B5]/90 transition-all shadow-lg"
-              >
-                <Linkedin size={20} fill="currentColor" />
-                Connect on LinkedIn
-              </a>
+
+            <h2 className="h2-serif text-[clamp(32px,5vw,56px)] mb-2">Elizabeth Emmanuel</h2>
+            <p className="text-gold font-bold text-lg md:text-xl mb-10 max-w-[600px] mx-auto leading-tight">
+              Digital Leverage Guide, Online Business & <br className="hidden md:block" /> AI Monetization Strategist.
+            </p>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+              {[
+                { icon: Award, text: "1,000+ Trained" },
+                { icon: MapPin, text: "Global Impact" },
+                { icon: Lightbulb, text: "Zero Tech Focus" },
+                { icon: Users, text: "High Achievers" }
+              ].map((stat, i) => (
+                <div key={i} className="flex flex-col items-center gap-2 bg-white/5 border border-white/10 rounded-2xl p-4 transition-all hover:bg-white/10">
+                  <stat.icon size={20} className="text-gold" />
+                  <span className="text-[11px] font-black uppercase tracking-wider text-white/80">{stat.text}</span>
+                </div>
+              ))}
             </div>
+
+            <a 
+              href="https://www.linkedin.com/in/elizabeth-emmanuel-carameldigitals" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 bg-[#0077B5] text-white font-bold py-4 px-10 rounded-full hover:bg-[#0077B5]/90 transition-all shadow-lg hover:-translate-y-1"
+            >
+              <Linkedin size={20} fill="currentColor" />
+              Connect on LinkedIn
+            </a>
           </Reveal>
         </div>
       </section>
@@ -768,26 +788,6 @@ export default function App() {
         </div>
       </section>
 
-      {/* THE REAL PROBLEM */}
-      <section className="py-15">
-        <div className="container">
-          <Reveal>
-            <div className="section-label">The Root Cause</div>
-            <h2 className="h2-serif">You're Stuck in "AI Information Overload"</h2>
-            <p className="big-text">Every single day you see new AI tools, new tutorials, new side hustle ideas, and new claims of online income. But <strong className="text-white">nobody shows you a clear, step-by-step system to actually start.</strong></p>
-            <p>So you keep learning. And learning. And nothing becomes income.</p>
-
-            <div className="bg-[linear-gradient(135deg,#1a1207_0%,#0f0d08_100%)] border border-gold/25 rounded-2xl p-10 my-10 text-center">
-              <p className="font-playfair text-[clamp(18px,2.8vw,26px)] italic text-white leading-relaxed">
-                The problem isn't that there's <span className="text-gold">too little</span> information.<br />The problem is there's <span className="text-gold">too much</span> — and none of it is organized into a clear action plan <span className="text-gold">built for you.</span>
-              </p>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      <div className="h-px bg-[linear-gradient(90deg,transparent,#C9A84C,transparent)] opacity-30"></div>
-
       {/* OPPORTUNITY */}
       <section className="py-24 bg-[#001226] relative overflow-hidden">
         <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_100%_100%,rgba(201,168,76,0.05)_0%,transparent_50%)] pointer-events-none"></div>
@@ -819,19 +819,19 @@ export default function App() {
             <p className="text-2xl md:text-3xl font-playfair italic text-white leading-tight">
               "The difference between those making money and those still watching tutorials is simple: <span className="text-gold font-bold">They follow a system."</span>
             </p>
-            <div className="mt-10 flex flex-col md:flex-row items-center gap-8">
+            <div className="mt-8 flex flex-col md:flex-row items-center gap-6">
               <a 
                 href="https://aibusinessmastery.me/r/carameldigitals" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="inline-block bg-gold text-dark font-black py-5 px-12 rounded-full shadow-[0_15px_40px_rgba(201,168,76,0.3)] hover:-translate-y-1 hover:scale-105 transition-all group"
+                className="inline-block bg-gold text-dark font-black py-3 px-4 sm:px-6 rounded-full shadow-[0_15px_40px_rgba(201,168,76,0.3)] hover:-translate-y-1 hover:scale-105 transition-all group text-[11px] sm:text-xs md:text-sm whitespace-nowrap"
               >
-                <span className="flex items-center gap-3">
-                  SHOW ME THE SYSTEM NOW <ChevronRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                <span className="flex items-center gap-2">
+                  SHOW ME THE SYSTEM NOW <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
                 </span>
               </a>
-              <div className="flex items-center gap-2 text-gold font-bold text-sm">
-                <Target size={18} /> Join 1,000+ Action-Takers
+              <div className="flex items-center gap-2 text-white font-bold text-sm">
+                <Target size={18} /> JOIN THE FAST ACTION TAKERS TODAY
               </div>
             </div>
           </Reveal>
@@ -849,7 +849,7 @@ export default function App() {
             </div>
             <h2 className="h2-serif text-[clamp(32px,6vw,64px)] text-gold mb-6 drop-shadow-[0_0_30px_rgba(201,168,76,0.4)]">AI Business Mastery</h2>
             <p className="text-xl md:text-2xl my-6 mb-12 text-[#e0d5c0] max-w-[800px] mx-auto leading-relaxed">
-              A beginner-friendly system designed to show you exactly how to turn AI tools into real digital income opportunities — <span className="text-white font-bold">even if you're starting from zero.</span>
+              A beginner-friendly system designed to show you exactly how to turn <span className="text-gold font-bold">FREE AI TOOLS</span> into real <span className="text-white font-bold">DIGITAL INCOME Opportunities</span> — even if you're starting from zero.
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left max-w-[900px] mx-auto mb-16">
@@ -871,10 +871,10 @@ export default function App() {
               href="https://aibusinessmastery.me/r/carameldigitals" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="inline-block bg-brand-blue text-white font-black text-lg no-underline px-16 py-6 rounded-full tracking-tight shadow-[0_20px_50px_rgba(0,51,102,0.4)] transition-all hover:-translate-y-1 hover:scale-105 hover:shadow-[0_25px_60px_rgba(0,51,102,0.5)] z-30 relative cursor-pointer group"
+              className="inline-block bg-brand-blue text-white font-black text-[11px] sm:text-xs md:text-sm no-underline px-6 sm:px-8 py-3 rounded-full tracking-tight shadow-[0_20px_50px_rgba(0,51,102,0.4)] transition-all hover:-translate-y-1 hover:scale-105 hover:shadow-[0_25px_60px_rgba(0,51,102,0.5)] z-30 relative cursor-pointer group whitespace-nowrap"
             >
-              <span className="flex items-center gap-3">
-                👉 GET STARTED NOW <ChevronRight size={20} className="group-hover:translate-x-1 transition-transform" />
+              <span className="flex items-center gap-2">
+                👉 GET STARTED NOW <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </span>
             </a>
           </Reveal>
@@ -1051,10 +1051,10 @@ export default function App() {
               <a 
                 href="#" 
                 onClick={openModal}
-                className="inline-block bg-white text-brand-blue font-black text-lg no-underline px-16 py-6 rounded-full tracking-tight shadow-[0_20px_40px_rgba(0,0,0,0.3)] transition-all hover:-translate-y-1 hover:scale-105 active:scale-95 z-30 relative cursor-pointer group"
+                className="inline-block bg-white text-brand-blue font-black text-[11px] sm:text-xs md:text-base no-underline px-6 sm:px-10 py-4 rounded-full tracking-tight shadow-[0_20px_40px_rgba(0,0,0,0.3)] transition-all hover:-translate-y-1 hover:scale-105 active:scale-95 z-30 relative cursor-pointer group whitespace-nowrap"
               >
-                <span className="flex items-center gap-3">
-                  👉 CLAIM YOUR SPOT & BONUSES NOW <ChevronRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                <span className="flex items-center gap-2">
+                  👉 CLAIM YOUR SPOT & BONUSES NOW <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
                 </span>
               </a>
               
@@ -1144,31 +1144,31 @@ export default function App() {
             The AI revolution isn't waiting for you to be "ready." It's happening right now. You can either be a spectator watching others win, or you can be the one getting paid.
           </Reveal>
 
-          {/* COUNTDOWN TIMER */}
-          <Reveal className="bg-[linear-gradient(135deg,#1a0f02,#0f0d08)] border-2 border-gold rounded-3xl p-10 text-center mx-auto mb-12 max-w-[600px] shadow-[0_30px_60px_rgba(0,0,0,0.5)]">
-            <div className="text-[14px] font-black tracking-[0.2em] uppercase text-accent mb-6 flex items-center justify-center gap-2">
-              <Clock size={16} /> BONUS OFFER EXPIRES IN
-            </div>
-            <CountdownTimer />
-            <div className="mt-8 pt-6 border-t border-white/5 text-sm text-muted">
-              🔥 Once this timer hits zero, the exclusive bonuses (worth <span className="text-gold font-bold">₦130,000+</span>) will be removed forever.
-            </div>
-          </Reveal>
-
           <Reveal className="space-y-6">
             <a 
               href="https://aibusinessmastery.me/r/carameldigitals" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="inline-block bg-[linear-gradient(135deg,var(--color-brand-blue)_0%,var(--color-brand-blue-light)_100%)] text-white font-black text-[clamp(18px,2.5vw,22px)] no-underline px-16 py-6 rounded-full tracking-tight shadow-[0_20px_50px_rgba(0,51,102,0.4)] transition-all hover:-translate-y-1 hover:scale-105 hover:shadow-[0_25px_70px_rgba(0,51,102,0.5)] z-30 relative cursor-pointer group"
+              className="inline-block bg-[linear-gradient(135deg,var(--color-brand-blue)_0%,var(--color-brand-blue-light)_100%)] text-white font-black text-[11px] sm:text-xs md:text-base no-underline px-6 sm:px-10 py-4 rounded-full tracking-tight shadow-[0_20px_50px_rgba(0,51,102,0.4)] transition-all hover:-translate-y-1 hover:scale-105 hover:shadow-[0_25px_70px_rgba(0,51,102,0.5)] z-30 relative cursor-pointer group whitespace-nowrap"
             >
-              <span className="flex items-center gap-3">
-                👉 ACCESS THE FULL PROGRAM BREAKDOWN <ChevronRight size={24} className="group-hover:translate-x-1 transition-transform" />
+              <span className="flex items-center gap-2">
+                👉 ACCESS THE FULL PROGRAM BREAKDOWN <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </span>
             </a>
             <p className="text-muted text-sm flex items-center justify-center gap-2">
               <ShieldCheck size={16} className="text-gold" /> 100% Risk-Free Money-Back Guarantee Included
             </p>
+          </Reveal>
+
+          {/* COUNTDOWN TIMER */}
+          <Reveal className="bg-[linear-gradient(135deg,#1a0f02,#0f0d08)] border-2 border-gold rounded-3xl p-10 text-center mx-auto mt-12 mb-12 max-w-[600px] shadow-[0_30px_60px_rgba(0,0,0,0.5)]">
+            <CountdownTimer />
+            <div className="text-[14px] font-black tracking-[0.2em] uppercase text-accent mt-6 mb-6 flex items-center justify-center gap-2">
+              <Clock size={16} /> BONUS OFFER EXPIRES IN
+            </div>
+            <div className="mt-8 pt-6 border-t border-white/5 text-sm text-muted">
+              🔥 Once this timer hits zero, the exclusive bonuses (worth <span className="text-gold font-bold">₦130,000+</span>) will be removed forever.
+            </div>
           </Reveal>
 
           <Reveal className="mt-24 pt-16 border-t border-white/5 max-w-[800px] mx-auto">
@@ -1194,9 +1194,22 @@ export default function App() {
       </section>
 
       {/* FOOTER */}
-      <footer className="bg-[#0a0a0a] border-t border-[#1a1a1a] py-7 px-5 text-center">
-        <p className="text-muted text-[13px]">© 2026 Caramel Digital Academy · Elizabeth Emmanuel · All Rights Reserved</p>
+      <footer className="bg-[#0a0a0a] border-t border-[#1a1a1a] py-7 px-5 text-center pb-32 md:pb-7">
+        <Reveal>
+          <p className="text-muted text-[13px]">© 2026 Caramel Digital Academy · Elizabeth Emmanuel · All Rights Reserved</p>
+        </Reveal>
       </footer>
+
+      {/* STICKY MOBILE CTA */}
+      <div className="fixed bottom-0 left-0 w-full p-4 bg-[#000d1a]/95 backdrop-blur-md border-t border-gold/20 z-[100] md:hidden flex items-center justify-center">
+        <button 
+          onClick={openModal}
+          className="w-full bg-gold text-dark font-black py-4 rounded-full text-center shadow-[0_0_30px_rgba(201,168,76,0.3)] animate-pulse-slow cursor-pointer"
+        >
+          👉 CLAIM YOUR SPOT & BONUSES NOW
+        </button>
+      </div>
+
       <WamationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       <RegistrationNotification />
     </div>
